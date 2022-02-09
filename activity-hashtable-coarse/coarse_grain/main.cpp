@@ -81,7 +81,7 @@ int main(int argc, char **argv)
   std::vector<std::thread> mythread;
 
   // Start Timer
-  auto start = std::chrono::steady_clock::now();
+  //auto start = std::chrono::steady_clock::now();
   std::mutex mu;
 
   // Populate Hash Table
@@ -108,13 +108,16 @@ int main(int argc, char **argv)
   }**/
 
   std::for_each(mythread.begin(), mythread.end(), [](std::thread &t){
+    auto start = std::chrono::steady_clock::now();
     t.join();
+    auto stop = std::chrono::steady_clock::now();
+     std::chrono::duration<double> time_elapsed = stop-start;
   });
 
 
   // Stop Timer
-  auto stop = std::chrono::steady_clock::now();
-  std::chrono::duration<double> time_elapsed = stop-start;
+ 
+ 
 
   /*
   // Check Hash Table Values 
