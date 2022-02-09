@@ -81,22 +81,22 @@ int main(int argc, char **argv)
   std::vector<std::thread> mythread;
 
   // Start Timer
-  //auto start = std::chrono::steady_clock::now();
+ 
   std::mutex mu;
-
+  auto start = std::chrono::steady_clock::now();
   // Populate Hash Table
    for (auto & filecontent: wordmap) {
     mythread.push_back(std::thread([&]() {
       // Populate Hash Table
-				     std::lock_guard<std::mutex> lg(mu);
+        std::lock_guard<std::mutex> lg(mu);
         for (auto & w : filecontent) {
               int count = dict.get(w);
               ++count;
               dict.set(w, count);
         }
       
-    }));
-      }
+     }));
+   }
 
   // Populate Hash Table
   /*for (auto & filecontent: wordmap) {
@@ -108,15 +108,14 @@ int main(int argc, char **argv)
   }**/
 
   std::for_each(mythread.begin(), mythread.end(), [](std::thread &t){
-    auto start = std::chrono::steady_clock::now();
     t.join();
-    auto stop = std::chrono::steady_clock::now();
-     std::chrono::duration<double> time_elapsed = stop-start;
   });
 
 
   // Stop Timer
- 
+  auto stop = std::chrono::steady_clock::now();
+  std::chrono::duration<double> time_elapsed = stop-start;
+  std::cerr << time_elapsed.count()<<"\n";
  
 
   /*
