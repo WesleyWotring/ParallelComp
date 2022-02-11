@@ -88,10 +88,12 @@ int main(int argc, char **argv)
    for (auto & filecontent: wordmap) {
     mythread.push_back(std::thread([&]() {
       // Populate Hash Table
-        std::lock_guard<std::mutex> lg(mu);
+        //std::lock_guard<std::mutex> lg(mu);
         for (auto & w : filecontent) {
+	  std::lock_guard<std::mutex> lg(mu);
               int count = dict.get(w);
               ++count;
+	      //std::lock_guard<std::mutex> lg(mu);
               dict.set(w, count);
         }
       

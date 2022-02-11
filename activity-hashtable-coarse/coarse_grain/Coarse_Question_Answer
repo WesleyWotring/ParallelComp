@@ -1,0 +1,4 @@
+Question: Why is the speedup (or slowdown) for coarse grain the way it is?
+Load imbalance, with coarse grained parallellism, a lot of the computations 
+fall onto certain processors and processors are overloaded making the tasks sit
+in the PD queue. I noticed this while waiting on the make bench to finish. 
