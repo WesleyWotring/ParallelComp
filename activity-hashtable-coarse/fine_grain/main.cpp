@@ -2,6 +2,8 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
+#include <mutex>
+#include <thread>
 
 #include "Dictionary.cpp"
 #include "MyHashtable.cpp"
@@ -77,6 +79,34 @@ int main(int argc, char **argv)
 
   // write code here
 
+ std::vector<std::thread> mythread;
+
+  // Start Timer
+ 
+  std::mutex mu;
+  auto start = std::chrono::steady_clock::now();
+  // Populate Hash Table
+   for (auto & filecontent: wordmap) {
+    mythread.push_back(std::thread([&]() {
+      // Populate Hash Table
+        for (auto & w : filecontent) {
+               ht.update(w);
+        }
+      
+     }));
+   }
+   
+   //join threads
+  std::for_each(mythread.begin(), mythread.end(), [](std::thread &t){
+    t.join();
+  });
+
+
+  // Stop Timer
+  auto stop = std::chrono::steady_clock::now();
+  std::chrono::duration<double> time_elapsed = stop-start;
+  std::cerr << time_elapsed.count()<<"\n";
+ 
 
 
 

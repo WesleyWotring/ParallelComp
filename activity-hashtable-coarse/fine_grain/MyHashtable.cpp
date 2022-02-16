@@ -6,6 +6,9 @@
 #include <iostream>
 #include <vector>
 
+#include <mutex>
+#include <thread>
+
 template<class K, class V>
 struct Node {
   K key;
@@ -29,6 +32,7 @@ protected:
   int count;
   double loadFactor;
   std::vector<Node<K,V>*> table;
+  std::mutex mut[256];
 
   struct hashtable_iter : public dict_iter {
     MyHashtable& mt;
@@ -98,6 +102,7 @@ protected:
     std::swap(this->table, temp_table.table); 
   }
 
+
 public:
   /**
    * Returns the node at key
@@ -144,6 +149,37 @@ public:
       this->resize(this->capacity * 2);
     }
   }
+
+
+
+  virtual V update(const K& key) {
+    std::size_t index = std::hash<K>{}(key) % this->capacity;
+    index = index < 0 ? index + this->capacity : index;
+    Node<K,V>* node = this->table[index];
+    
+    //make a lock for all buckets
+    std::lock_guard<std::mutex> lock(mut[index % 256]);
+    
+    while (node != nullptr) {
+      if (node->key == key){
+        node->value++;
+	return node->value;
+      }
+      node = node->next;
+    }
+        
+    //if we get here, then the key has not been found
+    node = new Node<K,V>(key, 1);
+    node->next = this->table[index];
+    this->table[index] = node;
+    this->count++;
+
+   
+    return V();
+  }
+
+
+
 
   /**
    * deletes the node at given key
