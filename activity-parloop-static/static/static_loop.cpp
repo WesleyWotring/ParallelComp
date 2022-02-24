@@ -2,6 +2,9 @@
 #define __STATIC_LOOP_H
 
 #include <functional>
+#include <thread>
+#include <vector>
+#include <iostream>
 
 class StaticLoop {
 private:
@@ -44,17 +47,61 @@ public:
   /// Once the iterations are complete, each thread will execute after
   /// on the TLS object. No two thread can execute after at the same time.
   template<typename TLS>
-  void parfor (size_t beg, size_t end, size_t increment,
+  void parfor(size_t beg, size_t end, size_t increment, size_t nbthreads,
 	       std::function<void(TLS&)> before,
 	       std::function<void(int, TLS&)> f,
 	       std::function<void(TLS&)> after
 	       ) {
-    TLS tls;
-    before(tls);    
-    for (size_t i=beg; i<end; i+= increment) {
-      f(i, tls);
+    std::vector<std::thread> mythread;
+    TLS tls[nbthreads];
+   
+    //int numerator = 1;
+    for(size_t b = 0; b , nbthreads; b++){
+       before(tls[b]); 
     }
-    after(tls);
+	
+    for(size_t j = 0; j < nbthreads; j++){
+       //before(tls[j]);
+
+       size_t newBeg = ((j) * end)/ nbthreads;
+       size_t  newEnd = ((j+1) * end)/ nbthreads;
+       
+       mythread.push_back(std::thread([&]() {
+        if(j == (nbthreads - 1)){
+	  //special case here for the last thread
+	     for (size_t i=newBeg; i<end; i+= increment) {
+	         f(i, tls[j]);
+		 //tls is all 0's at after
+	     }
+        }else{
+	  //regular loop
+             for (size_t i=newBeg; i<newEnd; i+= increment) {
+	        f(i, tls[j]);
+
+	     }}//std::cout<<tls[j]<< " ";
+     }));
+
+      //size_t  newBeg = newEnd;
+     //numerator++;
+      
+          //std::cout<<tls[1]<< " ";
+    }
+
+     std::for_each(mythread.begin(), mythread.end(), [](std::thread &t){
+        t.join();
+    });
+
+     for(int a = 0; a < nbthreads; a++){
+	//std::cout<<tls[a]<< " ";
+      after(tls[a]);
+
+    }
+     
+    //join threads
+   
+
+    
+   
   }
   
 };
