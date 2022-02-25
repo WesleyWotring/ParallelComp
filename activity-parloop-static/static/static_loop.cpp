@@ -56,17 +56,17 @@ public:
     TLS tls[nbthreads];
    
     //int numerator = 1;
-    for(size_t b = 0; b , nbthreads; b++){
+    for(size_t b = 0; b < nbthreads; b++){
        before(tls[b]); 
     }
 	
     for(size_t j = 0; j < nbthreads; j++){
        //before(tls[j]);
 
-       size_t newBeg = ((j) * end)/ nbthreads;
-       size_t  newEnd = ((j+1) * end)/ nbthreads;
+      size_t newBeg = ((j) * end)/ nbthreads;
+    size_t  newEnd = ((j+1) * end)/ nbthreads;
        
-       mythread.push_back(std::thread([&]() {
+    mythread.push_back(std::thread([&](size_t newBeg, size_t newEnd, size_t j) {
         if(j == (nbthreads - 1)){
 	  //special case here for the last thread
 	     for (size_t i=newBeg; i<end; i+= increment) {
@@ -79,7 +79,7 @@ public:
 	        f(i, tls[j]);
 
 	     }}//std::cout<<tls[j]<< " ";
-     }));
+				   },newBeg , newEnd, j));
 
       //size_t  newBeg = newEnd;
      //numerator++;
