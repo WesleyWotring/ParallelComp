@@ -1,0 +1,6 @@
+running on gal-c3.uncc.edu
+THREAD=16: before starting time is Tue Mar 1 11:30:45 EST 2022
+/var/spool/slurm/slurmd/job6849174/slurm_script: line 44: 2358842 Aborted                 (core dumped) ./dynamic_sched 1 0 10 ${n} ${intensity} ${THREAD} ${gran} 2> ${RESULTDIR}/dynamic_${n}_${intensity}_${THREAD}_${gran} > /dev/null
+/var/spool/slurm/slurmd/job6849174/slurm_script: line 44: 2359208 Aborted                 (core dumped) ./dynamic_sched 1 0 10 ${n} ${intensity} ${THREAD} ${gran} 2> ${RESULTDIR}/dynamic_${n}_${intensity}_${THREAD}_${gran} > /dev/null
+/var/spool/slurm/slurmd/job6849174/slurm_script: line 44: 2359568 Aborted                 (core dumped) ./dynamic_sched 1 0 10 ${n} ${intensity} ${THREAD} ${gran} 2> ${RESULTDIR}/dynamic_${n}_${intensity}_${THREAD}_${gran} > /dev/null
+THREAD=16: after ending time is Tue Mar 1 11:37:37 EST 2022
