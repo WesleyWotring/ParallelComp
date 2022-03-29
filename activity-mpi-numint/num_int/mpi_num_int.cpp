@@ -18,7 +18,7 @@ float f4(float x, int intensity);
 }
 #endif
 
-double calc_numerical_integration(int functionid, int a, int b, int n, int intensity){
+double calc_numerical_integration(int functionid, int a, int b, int n, int intensity, int rank, int size){
     double x = (double) a;
     double y = (double) b;
     
@@ -26,8 +26,14 @@ double calc_numerical_integration(int functionid, int a, int b, int n, int inten
     
     double temp;
     //switch case should be in for loop
-    for (int i=0; i<=n-1; i++){
-        temp = (x+(i+0.5) * ((y-x)/n));
+    double partitionStart = rank * (n / size);
+    double partitionEnd = (rank + 1) * (n / size);
+  
+   
+    
+  
+    for (partitionStart; partitionStart < partitionEnd; partitionStart++){
+        temp = (x+(partitionStart+0.5) * ((y-x)/n));
         
         switch(functionid){
     
@@ -44,6 +50,7 @@ double calc_numerical_integration(int functionid, int a, int b, int n, int inten
             res += f4(temp, intensity);
         } 
     }
+  
     
     res = ((y-x)/n) * res;
     
@@ -55,6 +62,8 @@ int main (int argc, char* argv[]) {
 
   int size;
   int rank;
+  double zero = 0;
+  
 
   MPI_Comm_size(MPI_COMM_WORLD, &size);
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
@@ -69,9 +78,14 @@ int main (int argc, char* argv[]) {
     std::cerr<<"usage: "<<argv[0]<<" <functionid> <a> <b> <n> <intensity>"<<std::endl;
     return -1;
   }
+ 
   
   auto start = std::chrono::system_clock::now();
-  double r = calc_numerical_integration(function_id, a, b, n, intensity);
+
+  
+  double r = calc_numerical_integration(function_id, a, b, n, intensity, rank, size);
+  MPI_Reduce(&r, &zero, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
+
   auto end = std::chrono::system_clock::now(); //
 
   std::chrono::duration<double> elapsed_seconds = end-start;
@@ -79,7 +93,7 @@ int main (int argc, char* argv[]) {
 
   //printf("%lf\n", r);
   if(rank == 0){
-    std::cout << r;
+    std::cout << zero;
   }
   
   fprintf(stderr, "%f\n", elapsed_seconds.count());
