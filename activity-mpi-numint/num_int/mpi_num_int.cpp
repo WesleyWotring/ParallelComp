@@ -29,7 +29,9 @@ double calc_numerical_integration(int functionid, int a, int b, int n, int inten
     double partitionStart = rank * (n / size);
     double partitionEnd = (rank + 1) * (n / size);
   
-   
+   if(rank == size - 1){
+     partitionEnd = n;
+   } 
     
   
     for (partitionStart; partitionStart < partitionEnd; partitionStart++){
