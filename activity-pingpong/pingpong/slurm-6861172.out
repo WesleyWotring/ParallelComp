@@ -1,0 +1,5 @@
+rank 0 input= 3 sent
+rank 0 input= 5 recv
+rank 1 input= 3 recv
+rank 1 input= 5 sent
+5
