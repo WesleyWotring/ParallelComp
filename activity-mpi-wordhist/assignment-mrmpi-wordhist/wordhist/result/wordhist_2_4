@@ -1,0 +1,53 @@
+[gal-c8:1894029:0:1894029] Caught signal 11 (Segmentation fault: invalid permissions for mapped object at address 0x7f6f24021004)
+==== backtrace (tid:1894029) ====
+ 0 0x0000000000056e59 ucs_debug_print_backtrace()  ???:0
+ 1 0x0000000000012c20 .annobin_sigaction.c()  sigaction.c:0
+ 2 0x000000000002686b hashlittle()  ???:0
+ 3 0x0000000000020617 MAPREDUCE_NS::MapReduce::aggregate()  ???:0
+ 4 0x00000000000213e4 MAPREDUCE_NS::MapReduce::collate()  ???:0
+ 5 0x000000000040a192 main()  ???:0
+ 6 0x0000000000023493 __libc_start_main()  ???:0
+ 7 0x000000000040a2fe _start()  ???:0
+=================================
+[gal-c8:1894029] *** Process received signal ***
+[gal-c8:1894029] Signal: Segmentation fault (11)
+[gal-c8:1894029] Signal code:  (-6)
+[gal-c8:1894029] Failing at address: 0x3221001ce68d
+[gal-c8:1894029] [ 0] /lib64/libpthread.so.0(+0x12c20)[0x7f6f48985c20]
+[gal-c8:1894029] [ 1] /projects/class/itcs5145_001/mapreduce-7Apr14/src/libmrmpi_mpicc.so(_Z10hashlittlePKvmj+0xeb)[0x7f6f49a2886b]
+[gal-c8:1894029] [ 2] /projects/class/itcs5145_001/mapreduce-7Apr14/src/libmrmpi_mpicc.so(_ZN12MAPREDUCE_NS9MapReduce9aggregateEPFiPciE+0x637)[0x7f6f49a22617]
+[gal-c8:1894029] [ 3] /projects/class/itcs5145_001/mapreduce-7Apr14/src/libmrmpi_mpicc.so(_ZN12MAPREDUCE_NS9MapReduce7collateEPFiPciE+0x54)[0x7f6f49a233e4]
+[gal-c8:1894029] [ 4] /projects/class/itcs5145_001/texts/100-0.txt[0x40a192]
+[gal-c8:1894029] [ 5] /lib64/libc.so.6(__libc_start_main+0xf3)[0x7f6f485d1493]
+[gal-c8:1894029] [ 6] /projects/class/itcs5145_001/texts/100-0.txt[0x40a2fe]
+[gal-c8:1894029] *** End of error message ***
+--------------------------------------------------------------------------
+Primary job  terminated normally, but 1 process returned
+a non-zero exit code. Per user-direction, the job has been aborted.
+--------------------------------------------------------------------------
+[gal-c7:1952377:0:1952377] Caught signal 11 (Segmentation fault: invalid permissions for mapped object at address 0x7f5c9c021004)
+==== backtrace (tid:1952377) ====
+ 0 0x0000000000056e59 ucs_debug_print_backtrace()  ???:0
+ 1 0x0000000000012c20 .annobin_sigaction.c()  sigaction.c:0
+ 2 0x000000000002686b hashlittle()  ???:0
+ 3 0x0000000000020617 MAPREDUCE_NS::MapReduce::aggregate()  ???:0
+ 4 0x00000000000213e4 MAPREDUCE_NS::MapReduce::collate()  ???:0
+ 5 0x000000000040a192 main()  ???:0
+ 6 0x0000000000023493 __libc_start_main()  ???:0
+ 7 0x000000000040a2fe _start()  ???:0
+=================================
+[gal-c7:1952377] *** Process received signal ***
+[gal-c7:1952377] Signal: Segmentation fault (11)
+[gal-c7:1952377] Signal code:  (-6)
+[gal-c7:1952377] Failing at address: 0x3221001dca79
+[gal-c7:1952377] [ 0] /lib64/libpthread.so.0(+0x12c20)[0x7f5cbf7dcc20]
+[gal-c7:1952377] [ 1] /projects/class/itcs5145_001/mapreduce-7Apr14/src/libmrmpi_mpicc.so(_Z10hashlittlePKvmj+0xeb)[0x7f5cc087f86b]
+[gal-c7:1952377] [ 2] /projects/class/itcs5145_001/mapreduce-7Apr14/src/libmrmpi_mpicc.so(_ZN12MAPREDUCE_NS9MapReduce9aggregateEPFiPciE+0x637)[0x7f5cc0879617]
+[gal-c7:1952377] [ 3] /projects/class/itcs5145_001/mapreduce-7Apr14/src/libmrmpi_mpicc.so(_ZN12MAPREDUCE_NS9MapReduce7collateEPFiPciE+0x54)[0x7f5cc087a3e4]
+[gal-c7:1952377] [ 4] /projects/class/itcs5145_001/texts/100-0.txt[0x40a192]
+[gal-c7:1952377] [ 5] /lib64/libc.so.6(__libc_start_main+0xf3)[0x7f5cbf428493]
+[gal-c7:1952377] [ 6] /projects/class/itcs5145_001/texts/100-0.txt[0x40a2fe]
+[gal-c7:1952377] *** End of error message ***
+--------------------------------------------------------------------------
+mpirun noticed that process rank 4 with PID 1894029 on node gal-c8 exited on signal 11 (Segmentation fault).
+--------------------------------------------------------------------------

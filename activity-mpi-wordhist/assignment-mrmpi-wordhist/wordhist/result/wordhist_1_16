@@ -1,0 +1,28 @@
+[gal-c9:1779078:0:1779078] Caught signal 11 (Segmentation fault: invalid permissions for mapped object at address 0x7ffa4984cba0)
+==== backtrace (tid:1779078) ====
+ 0 0x0000000000056e59 ucs_debug_print_backtrace()  ???:0
+ 1 0x0000000000012c20 .annobin_sigaction.c()  sigaction.c:0
+ 2 0x00000000000205a3 MAPREDUCE_NS::MapReduce::aggregate()  ???:0
+ 3 0x00000000000213e4 MAPREDUCE_NS::MapReduce::collate()  ???:0
+ 4 0x000000000040a192 main()  ???:0
+ 5 0x0000000000023493 __libc_start_main()  ???:0
+ 6 0x000000000040a2fe _start()  ???:0
+=================================
+[gal-c9:1779078] *** Process received signal ***
+[gal-c9:1779078] Signal: Segmentation fault (11)
+[gal-c9:1779078] Signal code:  (-6)
+[gal-c9:1779078] Failing at address: 0x3221001b2586
+[gal-c9:1779078] [ 0] /lib64/libpthread.so.0(+0x12c20)[0x7ffa593a8c20]
+[gal-c9:1779078] [ 1] /projects/class/itcs5145_001/mapreduce-7Apr14/src/libmrmpi_mpicc.so(_ZN12MAPREDUCE_NS9MapReduce9aggregateEPFiPciE+0x5c3)[0x7ffa5a4455a3]
+[gal-c9:1779078] [ 2] /projects/class/itcs5145_001/mapreduce-7Apr14/src/libmrmpi_mpicc.so(_ZN12MAPREDUCE_NS9MapReduce7collateEPFiPciE+0x54)[0x7ffa5a4463e4]
+[gal-c9:1779078] [ 3] /projects/class/itcs5145_001/texts/100-0.txt[0x40a192]
+[gal-c9:1779078] [ 4] /lib64/libc.so.6(__libc_start_main+0xf3)[0x7ffa58ff4493]
+[gal-c9:1779078] [ 5] /projects/class/itcs5145_001/texts/100-0.txt[0x40a2fe]
+[gal-c9:1779078] *** End of error message ***
+--------------------------------------------------------------------------
+Primary job  terminated normally, but 1 process returned
+a non-zero exit code. Per user-direction, the job has been aborted.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun noticed that process rank 4 with PID 1779078 on node gal-c9 exited on signal 11 (Segmentation fault).
+--------------------------------------------------------------------------
